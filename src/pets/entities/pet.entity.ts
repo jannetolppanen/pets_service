@@ -1,9 +1,14 @@
-// Määritellään Pet luokka ja sen konstruktori
+import { ApiProperty } from '@nestjs/swagger';
 
+// Määritellään Pet luokka ja sen konstruktori
 export class Pet {
+  @ApiProperty()
   petId: string;
+  @ApiProperty()
   name: string;
+  @ApiProperty()
   description: string;
+  @ApiProperty()
   dateOfBirth: string;
 
   constructor(
