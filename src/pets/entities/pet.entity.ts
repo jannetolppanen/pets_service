@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 // Määritellään Pet luokka ja sen konstruktori
+// apiproperty on swaggerin luontia varten
 export class Pet {
   @ApiProperty()
   petId: string;
