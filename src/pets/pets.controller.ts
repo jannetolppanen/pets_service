@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get, Param, Patch, Delete } from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { Pet } from './entities/pet.entity';
-import { CreatePetDto } from './dto/create-pet.dto';
+import { CreatePetDto, UpdatePetDto } from './dto/create-pet.dto';
 import { ApiCreatedResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 // Controller hoitaa endpointit ja logiikka hoituu servicen kautta
@@ -31,7 +31,7 @@ export class PetsController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get one pets' })
+  @ApiOperation({ summary: 'Get one pet' })
   @ApiResponse({ status: 200, description: 'OK' })
   @ApiResponse({ status: 404, description: 'Matching ID not found' })
   getAPet(@Param('id') petId: string): Pet {
@@ -44,9 +44,9 @@ export class PetsController {
   @ApiResponse({ status: 404, description: 'Matching ID not found' })
   updatePet(
     @Param('id') petId: string,
-    @Body() createPetDto: CreatePetDto,
+    @Body() updatePetDto: UpdatePetDto,
   ): Pet {
-    return this.petsService.updateOnePet(petId, createPetDto);
+    return this.petsService.updateOnePet(petId, updatePetDto);
   }
 
   @Delete(':id')

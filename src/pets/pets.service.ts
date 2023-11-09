@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Pet } from './entities/pet.entity';
-import { CreatePetDto } from './dto/create-pet.dto';
+import { CreatePetDto, UpdatePetDto } from './dto/create-pet.dto';
 import { nanoid } from 'nanoid';
 
 // Provider eli service, täällä on logiikka siihen mitä eri endpointeissa tapahtuu. Injectable tarkoittaa että tämä petservice voidaan ottaa käyttöön controllerissa.
@@ -49,7 +49,7 @@ export class PetsService {
     throw new NotFoundException('Could not find matching id');
   }
 
-  updateOnePet(petId: string, createPetDto: CreatePetDto): Pet {
+  updateOnePet(petId: string, updatePetDto: UpdatePetDto): Pet {
     const index = this.pets.findIndex((item) => item.petId === petId);
 
     if (index >= 0) {
@@ -57,14 +57,14 @@ export class PetsService {
       const updatedPet = { ...pet };
 
       // Tsekataan erikseen kaikki arvot ja muutetaan vain ne jotka on syötetty
-      if (createPetDto.name) {
-        updatedPet.name = createPetDto.name;
+      if (updatePetDto.name) {
+        updatedPet.name = updatePetDto.name;
       }
-      if (createPetDto.description) {
-        updatedPet.description = createPetDto.description;
+      if (updatePetDto.description) {
+        updatedPet.description = updatePetDto.description;
       }
-      if (createPetDto.dateOfBirth) {
-        updatedPet.dateOfBirth = createPetDto.dateOfBirth;
+      if (updatePetDto.dateOfBirth) {
+        updatedPet.dateOfBirth = updatePetDto.dateOfBirth;
       }
       // Muokataan pets arrayhin päivitetty Pet ja palautetaan päivitetty Pet
       this.pets[index] = updatedPet;
