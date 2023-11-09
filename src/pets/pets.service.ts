@@ -32,10 +32,12 @@ export class PetsService {
     console.log(`added a pet ${JSON.stringify(pet)}`);
     return pet;
   }
+
   getPets(): Pet[] {
     // palautetaan kopio, eikä koskaan suoraa pääsyä this.pets muuttujaan
     return [...this.pets];
   }
+
   getOnePet(petId: string): Pet {
     // findIndex palauttaa petin indeksin arraysta paitsi jos ei löydy niin palauttaa -1
     const index = this.pets.findIndex((item) => item.petId === petId);
@@ -46,6 +48,7 @@ export class PetsService {
     }
     throw new NotFoundException('Could not find matching id');
   }
+
   updateOnePet(petId: string, createPetDto: CreatePetDto): Pet {
     const index = this.pets.findIndex((item) => item.petId === petId);
 
@@ -68,5 +71,14 @@ export class PetsService {
       return { ...updatedPet };
     }
     throw new NotFoundException('Could not find matching id');
+  }
+
+  deleteOnePet(petId: string): void {
+    const index = this.pets.findIndex((item) => item.petId === petId);
+    if (index >= 0) {
+      this.pets.splice(index, 1);
+    } else {
+      throw new NotFoundException('Could not find matching id');
+    }
   }
 }

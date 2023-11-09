@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Patch, Delete } from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { Pet } from './entities/pet.entity';
 import { CreatePetDto } from './dto/create-pet.dto';
@@ -10,6 +10,7 @@ import { ApiCreatedResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/
 @ApiTags('pets')
 export class PetsController {
   constructor(private readonly petsService: PetsService) {}
+
   @Post()
   @ApiOperation({ summary: 'Create a new pet' })
   @ApiCreatedResponse({
@@ -21,12 +22,14 @@ export class PetsController {
     console.log(`Creating a pet ${JSON.stringify(createPetDto)}`);
     return this.petsService.insertPet(createPetDto);
   }
+
   @Get()
   @ApiOperation({ summary: 'Get all pets' })
   @ApiResponse({ status: 200, description: 'OK' })
   getPets(): Pet[] {
     return this.petsService.getPets();
   }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get one pets' })
   @ApiResponse({ status: 200, description: 'OK' })
@@ -44,5 +47,13 @@ export class PetsController {
     @Body() createPetDto: CreatePetDto,
   ): Pet {
     return this.petsService.updateOnePet(petId, createPetDto);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete a pet' })
+  @ApiResponse({ status: 200, description: 'OK' })
+  @ApiResponse({ status: 404, description: 'Matching ID not found' })
+  deletePet(@Param('id') petId: string): void {
+    return this.petsService.deleteOnePet(petId);
   }
 }
