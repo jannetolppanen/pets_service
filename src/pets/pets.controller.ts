@@ -1,8 +1,21 @@
-import { Controller, Post, Body, Get, Param, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { Pet } from './entities/pet.entity';
 import { CreatePetDto, UpdatePetDto } from './dto/create-pet.dto';
-import { ApiCreatedResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 // Controller hoitaa endpointit ja logiikka hoituu servicen kautta
 
